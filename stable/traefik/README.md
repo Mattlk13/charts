@@ -1,7 +1,16 @@
+# ⚠️ Repo Archive Notice
+
+As of Nov 13, 2020, charts in this repo will no longer be updated.
+For more information, see the Helm Charts [Deprecation and Archive Notice](https://github.com/helm/charts#%EF%B8%8F-deprecation-and-archive-notice), and [Update](https://helm.sh/blog/charts-repo-deprecation/).
+
 # Traefik
 
 [Traefik](https://traefik.io/) is a modern HTTP reverse proxy and load balancer made to deploy
 microservices with ease.
+
+## DEPRECATION NOTICE
+
+This chart is deprecated and no longer supported.
 
 ## Introduction
 
@@ -87,7 +96,7 @@ The following table lists the configurable parameters of the Traefik chart and t
 | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
 | `fullnameOverride`                     | Override the full resource names                                                                                             | `{release-name}-traefik` (or traefik if release-name is traefik) |
 | `image`                                | Traefik image name                                                                                                           | `traefik`                                         |
-| `imageTag`                             | The version of the official Traefik image to use                                                                             | `1.7.20`                                           |
+| `imageTag`                             | The version of the official Traefik image to use                                                                             | `1.7.26`                                           |
 | `imagePullSecrets`                     | A list of image pull secrets (if needed)                                                                                     | None                                           |
 | `imagePullPolicy`                     | Container pull policy                                                                                    | `IfNotPresent`                                           |
 | `serviceType`                          | A valid Kubernetes service type                                                                                              | `LoadBalancer`                                    |
@@ -212,6 +221,16 @@ The following table lists the configurable parameters of the Traefik chart and t
 | `accessLogs.fields.headers.names`      | A map of HTTP-header-specific logging behaviours in JSON access logs, with HTTP header names as keys, and `keep`, `drop` or `redact` as the value for each map entry | None      |
 | `metrics.prometheus.enabled`           | Whether to enable the `/metrics` endpoint for metric collection by Prometheus.                                               | `false`                                           |
 | `metrics.prometheus.buckets`           | A list of response times (in seconds) - for each list element, Traefik will report all response times less than the element. | `[0.1,0.3,1.2,5]`                                 |
+| `metrics.prometheus.service.name`      | Custom service name for the Prometheus service                                                 | ``                                           |
+| `metrics.prometheus.service.annotations`      | Annotations for the Prometheus service                                                 | `{ prometheus.io/scrape: "true" }`                                           |
+| `metrics.prometheus.service.port`      | Port for the Prometheus service                                                 | `9100`                                           |
+| `metrics.prometheus.service.type`      | Type for the Prometheus service                                                 | `ClusterIP`                                           |
+| `metrics.prometheus.service.loadBalancerIP`      | Static IP for the Prometheus Service when its type is `LoadBalancer`                                            | ``                                           |
+| `metrics.prometheus.service.loadBalancerSourceRanges`      | IP range for allowed traffic for the Prometheus Service when its type is `LoadBalancer`               | ``                                           |
+| `metrics.prometheus.service.externalIP`      | Static IP for the service  for the Prometheus Service when its type is `LoadBalancer`               | ``                                           |
+| `metrics.prometheus.service.whiteListSourceRange`      | Static IP for the service  for the Prometheus Service when its type is `LoadBalancer`               | ``                                           |
+| `metrics.prometheus.service.externalTrafficPolicy`                | Set the externalTrafficPolicy in the Service to either Cluster or Local for the Prometheus service | `Cluster`                                         |
+| `metrics.prometheus.service.nodePort`                | Node port for Prometheus service when its type is `NodePort`. | `9100`                                         |
 | `metrics.serviceMonitor.enabled`       | Whether to enable servicemonitor for Prometheus.                                               | `false`                                           |
 | `metrics.datadog.enabled`              | Whether to enable pushing metrics to Datadog.                                                                                | `false`                                           |
 | `metrics.datadog.address`              | Datadog host in the format <hostname>:<port>                                                                                 | `localhost:8125`                                  |

@@ -20,6 +20,10 @@ securityContext:
   enabled: true  # Should be set to false when running on OpenShift
   runAsUser: 1000
 
+log:
+  format: logfmt
+  level: info
+
 resources: {}
   # requests:
   #   cpu: 100m
@@ -117,7 +121,7 @@ es:
 
 
   ssl:
-    ## If true, a secure connection to ES cluster is used (requires SSL certs below)
+    ## If true, a secure connection to ES cluster is used
     ##
     enabled: false
 
@@ -132,22 +136,25 @@ es:
       # pem:
 
       # Path of ca pem file which should match a secretMount path
-      # path: /ssl/ca.pem
+      path: /ssl/ca.pem
     client:
+      ## if true, client SSL certificate is used for authentication
+      ##
+      enabled: true
 
       ## PEM that contains the client cert to connect to Elasticsearch.
       ##
       # pem:
 
       # Path of client pem file which should match a secretMount path
-      # pemPath: /ssl/client.pem
+      pemPath: /ssl/client.pem
 
       ## Private key for client auth when connecting to Elasticsearch
       ##
       # key:
 
       # Path of client key file which should match a secretMount path
-      # keyPath: /ssl/client.key
+      keyPath: /ssl/client.key
 web:
   ## Path under which to expose metrics.
   ##
@@ -163,6 +170,10 @@ serviceMonitor:
   interval: 10s
   scrapeTimeout: 10s
   scheme: http
+  relabelings: []
+  targetLabels: []
+  metricRelabelings: []
+  sampleLimit: 0
 
 prometheusRule:
   ## If true, a PrometheusRule CRD is created for a prometheus operator
